@@ -1,8 +1,8 @@
-
-import { Input } from "@/components/ui/input";
-import { getUser } from "@/services/ssr/getUser";
-import { SyncAuthStore } from "@/store/synchAuthStore";
-import { Signal } from "lucide-react";
+import { Input } from '@/components/ui/input'
+import { getUser } from '@/services/ssr/getUser'
+import { SyncAuthStore } from '@/store/synchAuthStore'
+import { Signal } from 'lucide-react'
+import { UserButton } from '../User/UserButton'
 
 export const Navbar = async () => {
   const user = await getUser()
@@ -20,7 +20,7 @@ export const Navbar = async () => {
         </div>
         {user ? (
           <>
-            <Signal size={18}/>
+            <UserButton user={user} />
           </>
         ) : (
           <>
@@ -29,7 +29,7 @@ export const Navbar = async () => {
         )}
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic'

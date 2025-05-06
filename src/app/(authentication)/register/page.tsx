@@ -2,29 +2,34 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { useLoginUser } from '@/hooks/Auth/useLoginUser'
+import { useRegisterUser } from '@/hooks/Auth/useRegisterUser'
 import { ArrowBigLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const { mutateAsync: loginUser, isPending } = useLoginUser()
+  const [confirmPassword, setConfirmPassword] = useState<string>('')
+  const [name, setName] = useState<string>('')
+
+  const { mutateAsync: registerUser, isPending } = useRegisterUser()
   const router = useRouter()
 
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
   const handleLogin = async () => {
     if (!isValidEmail) return
-   const res =  await loginUser({
+
+    const res = await registerUser({
       data: {
         email,
         password,
+        name,
       },
     })
     if (res) {
-      router.push('/')
+      router.push('/login')
     }
   }
 
@@ -58,6 +63,20 @@ export default function LoginPage() {
           />
         </div>
         <div className="flex flex-col gap-2">
+          <label htmlFor="name" className="text-xs text-neutral/70">
+            Nome
+          </label>
+          <Input
+            placeholder="Insira seu nome"
+            id="name"
+            type="text"
+            autoComplete="name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
           <label htmlFor="password" className="text-xs text-neutral/70">
             Senha
           </label>
@@ -71,21 +90,43 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="confirmPassword" className="text-xs text-neutral/70">
+            Confirme a Senha
+          </label>
+          <Input
+            placeholder="Confirme sua senha"
+            id="confirmPassword"
+            type="password"
+            autoComplete="current-password"
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
         <Button
           className="w-full mt-4"
-          disabled={!isValidEmail || isPending}
+          disabled={
+            !isValidEmail ||
+            isPending ||
+            password !== confirmPassword ||
+            !name ||
+            !password ||
+            !confirmPassword ||
+            !email
+          }
           onClick={handleLogin}
         >
           Entrar
         </Button>
-        <p className='text-sm'>
-          Ainda não possui conta?
+        <p className="text-sm">
+          Já possui conta?
           <span
-            onClick={() => router.push('/register')}
+            onClick={() => router.push('/login')}
             className="hover:underline text-primary cursor-pointer"
           >
             {' '}
-            Registre-se
+            Entrar
           </span>
         </p>
       </div>

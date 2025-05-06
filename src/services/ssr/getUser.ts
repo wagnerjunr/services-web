@@ -1,13 +1,15 @@
 import { cookies } from 'next/headers'
 
 export const getUser = async () => {
-  // const cookies = cookies().get('refreshToken')?.value
-  // if (!cookies) return null
+  const cookiesRefreshToken = (await cookies()).get('refreshToken')?.value
+  const cookiesUser = (await cookies()).toString()
+
+  if (!cookiesRefreshToken) return null
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
     method: 'GET',
     credentials: 'include',
-    headers: { Cookie: cookies().toString() },
+    headers: { Cookie: cookiesUser },
     cache: 'no-cache',
   })
 

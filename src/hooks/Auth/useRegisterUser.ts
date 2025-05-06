@@ -4,24 +4,22 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 import { AxiosError } from 'axios'
 
-const loginZod = z.object({
+const bodySchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-})
+  name: z.string().optional()
+});
 
-export interface LoginRequest {
-  email: string
-  password: string
-}
+export type RegisterRequest = z.infer<typeof bodySchema>;
 
 type ResponseData = {
   message: string
 }
 
-export const useLoginUser = () => {
-  const LoginUserFn = async ({ data }: { data: LoginRequest }) => {
+export const useRegisterUser = () => {
+  const RegisterUserFn = async ({ data }: { data: RegisterRequest }) => {
     try {
-      const response = await api.post('/auth/login', data)
+      const response = await api.post('/auth/register', data)
       toast.success('Sucesso', {
         description: response.data.message,
         action: {
@@ -48,7 +46,7 @@ export const useLoginUser = () => {
   }
 
   return useMutation({
-    mutationKey: ['LoginUser'],
-    mutationFn: LoginUserFn,
+    mutationKey: ['RegisterUser'],
+    mutationFn: RegisterUserFn,
   })
 }
