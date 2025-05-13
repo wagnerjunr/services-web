@@ -1,8 +1,8 @@
 import { Input } from '@/components/ui/input'
 import { getUser } from '@/services/ssr/getUser'
 import { SyncAuthStore } from '@/store/synchAuthStore'
-import { Signal } from 'lucide-react'
 import { UserButton } from '../User/UserButton'
+import { Button } from '@/components/ui/button'
 
 export const Navbar = async () => {
   const user = await getUser()
@@ -19,9 +19,12 @@ export const Navbar = async () => {
           />
         </div>
         {user ? (
-          <>
+          <div className="flex items-center gap-4">
+            <a href="/product">
+              <Button>Adicionar Foto</Button>
+            </a>
             <UserButton user={user} />
-          </>
+          </div>
         ) : (
           <>
             <a href="/login">Entrar</a>

@@ -5,7 +5,7 @@ export interface TokenProps {
   setAccessToken: (accessToken: string | null) => void; 
 }
 
-export const useAuthStore = create<TokenProps>((set) => ({
+export const useAcessTokenStore = create<TokenProps>((set) => ({
   accessToken: null, // Initial value is null
   setAccessToken: (token) => set({ accessToken: token }),
 }));
