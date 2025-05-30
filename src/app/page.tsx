@@ -7,7 +7,7 @@ export default async function Home() {
 
       <div className="flex flex-col w-full min-h-full items-center justify-center px-5 py-6 gap-4 max-w-[1324px] mt-[80px]">
         <h1 className="font-header text-xl font-semibold w-full">
-          Encontre sua vibe
+          Página inicial
         </h1>
       </div>
     </main>

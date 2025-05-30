@@ -3,6 +3,7 @@ import { getUser } from '@/services/ssr/getUser'
 import { SyncAuthStore } from '@/store/synchAuthStore'
 import { UserButton } from '../User/UserButton'
 import { Button } from '@/components/ui/button'
+import { MessageCircleMore } from 'lucide-react'
 
 export const Navbar = async () => {
   const user = await getUser()
@@ -14,14 +15,17 @@ export const Navbar = async () => {
         <div className="flex gap-4">
           <Input
             id="partySearch"
-            placeholder="Procurar por Rolês..."
+            placeholder="Procurar por Produto"
             className="h-9 w-[450px] hidden md:block rounded-[41px]"
           />
         </div>
         {user ? (
-          <div className="flex items-center gap-4">
-            <a href="/product">
-              <Button>Adicionar Foto</Button>
+          <div className="flex items-center gap-6">
+            <a href="/direct">
+              <Button className='h-fit rounded-2xl'>
+              <MessageCircleMore />
+                Mensagens
+                </Button>
             </a>
             <UserButton user={user} />
           </div>
